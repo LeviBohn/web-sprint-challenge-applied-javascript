@@ -1,8 +1,8 @@
 const Header = (title, date, temp) => {
   const headerContainer = document.createElement('div');
-  const headerDate =      document.createElement('span');
-  const headerTitle =     document.createElement('h1');
-  const headerTemp =      document.createElement('span');
+  const headerDate      = document.createElement('span');
+  const headerTitle     = document.createElement('h1');
+  const headerTemp      = document.createElement('span');
 
   headerContainer.classList.add("header");
   headerDate.classList.add("date");
