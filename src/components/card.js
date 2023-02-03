@@ -1,23 +1,32 @@
 import axios from "axios";
+const articlesURL = 'http://localhost:5001/api/articles';
 
 const Card = (article) => {
-  const cardContainer = document.createElement('div');
+
+  const card = document.createElement('div');
   const headline = document.createElement('div');
   const author = document.createElement('div');
   const authorImgContainer = document.createElement('div');
   const authorImg = document.createElement('img')
   const by = document.createElement('span');
 
-  cardContainer.classList.add('card');
+  card.classList.add('card');
   headline.classList.add('headline');
   author.classList.add('author');
   authorImgContainer.classList.add('img-container')
 
-  // headline.textContent = 
-  // authorImg.src = 
-  // by.textContent = 
+  headline.textContent = article.headline;
+  authorImg.setAttribute('src', article.authorPhoto);
+  by.textContent = 'By ' + article.authorName;
 
-  return cardContainer;
+  card.appendChild(headline);
+  card.appendChild(author);
+  author.appendChild(authorImgContainer);
+  authorImgContainer.appendChild(authorImg);
+  author.appendChild(by);
+
+  return card;
+
 
 
   // TASK 5
@@ -39,14 +48,29 @@ const Card = (article) => {
   // </div>
   //
 }
+console.log(Card({headline: 'Breaking News', authorPhoto: 'photo', authorName: 'Samantha'}))
+
 
 const cardAppender = (selector) => {
   axios.get('http://localhost:5001/api/articles')
-  .then( res => {
-    console.log(res.data.articles);
-    let article = res.data.articles;
-    
-  })
+    .then(res => {
+      console.log(res.data.articles);
+      let articles = res.data.articles;
+      for (let key in articles) {
+        console.log(key);
+        const array = articles[key];
+        console.log(array);
+        for (let item of array) {
+          console.log(item);
+          const card = Card(item);
+          let section = document.querySelector(selector);
+          section.appendChild(card);
+        }
+      }
+    })
+    .catch(err => {
+      console.log("this isn't working");
+    })
   // TASK 6
   // ---------------------
   // Implement this function that takes a css selector as its only argument.
